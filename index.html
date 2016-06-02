@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bootstrap Boilerplate</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<style>
+		/*Custom CSS here*/
+	</style>
+</head>
+<body>
+	<!-- Any HTML Goes Here -->
+<!-- 	<div class="container">
+		<div class="row col-md-8 col-md-offset2"></div> -->
+		<table id="personDataTable" class="table table-striped"></table>
+        <div id="loading"> <img src="default.gif" alt="gif"></div>
+	<!-- </div> -->
+		
+	<!-- Any HTML Ends Here -->
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script>
+
+    	// $.ajax({
+    	// url: a_cross_domain_url,
+    	// });
+
+    	var root = 'http://jsonplaceholder.typicode.com';
+
+    	$.ajax({
+    	  	url: root + '/users/',
+    	  	method: 'GET',
+            beforeSend: function() {
+                $('#loading').show();
+            },
+            complete: function(){
+                $('#loading').hide();
+            },
+    	  	success: function(data, textStatus, jqXHR) {
+    	  		drawTable(data);
+
+    	  	}
+    	})
+
+
+    	function drawTable(data) {
+    		for (var i = 0; i < data.length; i++) {
+    			drawRow(data[i]);
+    		}
+    	}
+
+    	function drawRow(rowData) {
+    		console.log(rowData);
+    		var row = $("<tr />")
+    		$("#personDataTable").append(row);
+    		row.append($("<td>" + rowData.id + "</td>"));
+    		row.append($("<td>" + rowData.name + "</td>"));
+    		row.append($("<td>" + rowData.email + "</td>"));
+    	}
+
+    </script>
+</body>
+</html>
